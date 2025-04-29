@@ -7,16 +7,47 @@ function keresesNev(){
 }
 
 function nevMegjelenit(y,beNev){
+    let sz=`<table class="table table-dark table-striped">
+    <thead>
+      <tr>
+        <th>Év,Kategória</th>
+        <th>Keresztnév</th>
+        <th>Vezetéknév</th>
+        <th>Indok</th>
+      </tr>
+    </thead>
+    <tbody>
+`
     for (const elem of y.prizes) {
         if(elem.laureates !=undefined)
             for (const alElem of elem.laureates) {
                 
-                if(alElem.firstname == beNev){
-                    console.log(alElem.firstname)
+                if(alElem.firstname.toLowerCase().includes(beNev.toLowerCase())  || alElem.motivation.toLowerCase().includes(beNev.toLowerCase())){
+                    //console.log(alElem.firstname)
+                    sz+=`<tr>
+                        <td>${elem.year} ${elem.category}</td>
+                        <td>${alElem.firstname}</td>
+                        <td>${alElem.surname}</td>
+                        <td>${alElem.motivation}</td>
+                        </tr>`
+                }
+                if(alElem.surname!=undefined && alElem.surname.toLowerCase().includes(beNev.toLowerCase())){
+                    sz+=`<tr>
+                        <td>${elem.year} ${elem.category}</td>
+                        <td>${alElem.firstname}</td>
+                        <td>${alElem.surname}</td>
+                        <td>${alElem.motivation}</td>
+                        </tr>`
+                }
+                else{
+                    console.log("Nincs találat.")
                 }
             }
         else{
-            console.log(elem.year+" "+elem.category)
+            //console.log(elem.year+" "+elem.category)
         }
-    }   
+    }
+    sz+=`</tbody>
+    </table>`
+document.getElementById("tablazat").innerHTML=sz
 }
